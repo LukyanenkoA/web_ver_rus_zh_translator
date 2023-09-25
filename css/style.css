@@ -1,5 +1,6 @@
 .container-fluid {
     background-color: #5DC8CD;
+    padding-bottom: 15em;
 }
 .description{
     padding: 2em;
@@ -7,7 +8,7 @@
 .description h2{
     color: 	#006064;
 }
-.description h5{
+.description h4{
     color: 	#006064;
 }
 .p-1{
@@ -23,6 +24,7 @@
 .container-fluid input::placeholder{
     color:#006064;
     text-align: center;
+    font-size: 20px;
 }
 .container-fluid input:hover{
     border-color: #006064;
@@ -33,6 +35,7 @@
     border-color: #006064;
     color: #006064;
     height: 5em;
+    font-size: 16px;
 }
 .container-fluid .btn:hover{
     background-color: #006064;
@@ -44,6 +47,12 @@
     .container-fluid input{
         height: 25em;
         width: 30em;
+    }
+    .container-fluid input::placeholder{
+        font-size: 24px;
+    }
+    .container-fluid .btn{
+        font-size: 20px;
     }
 }
 /* Medium devices (desktops, 992px and up) */
