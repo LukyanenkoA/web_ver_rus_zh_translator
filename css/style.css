@@ -15,11 +15,13 @@
     margin-bottom: 3em;
 }
 .container-fluid input{
-    height: 15em;
-    width: 20em;
+    height: 12em;
+    width: 17em;
     border-color: #006064;
     border-radius: 20px;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    font-size: 20px;
+    text-align: center;
 }
 .container-fluid input::placeholder{
     color:#006064;
@@ -45,8 +47,9 @@
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .container-fluid input{
-        height: 25em;
-        width: 30em;
+        height: 22em;
+        width: 27em;
+        font-size: 24px;
     }
     .container-fluid input::placeholder{
         font-size: 24px;
