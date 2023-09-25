@@ -1,0 +1,51 @@
+.container-fluid {
+    background-color: #5DC8CD;
+}
+.description{
+    padding: 2em;
+}
+.description h2{
+    color: 	#006064;
+}
+.description h5{
+    color: 	#006064;
+}
+.p-1{
+    margin-bottom: 2em;
+}
+.container-fluid input{
+    height: 15em;
+    width: 20em;
+    border-color: #006064;
+    border-radius: 20px;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.container-fluid input::placeholder{
+    color:#006064;
+}
+.container-fluid input:hover{
+    border-color: #006064;
+    background-color: powderblue;
+}
+.container-fluid .btn{
+    background-color: #5DC8CD;
+    border-color: #006064;
+    color: #006064;
+    height: 5em;
+}
+.container-fluid .btn:hover{
+    background-color: #006064;
+    border-color: #5DC8CD;
+    color: #5DC8CD;
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .container-fluid input{
+        height: 25em;
+        width: 30em;
+    }
+}
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {}
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {}
