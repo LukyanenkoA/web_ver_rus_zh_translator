@@ -14,7 +14,7 @@
 .p-1{
     margin-bottom: 3em;
 }
-.container-fluid input{
+.container-fluid textarea{
     height: 12em;
     width: 17em;
     border-color: #006064;
@@ -23,14 +23,16 @@
     font-size: 20px;
     text-align: center;
 }
-.container-fluid input::placeholder{
+.container-fluid textarea::placeholder{
     color:#006064;
-    text-align: center;
+    text-align:center;
     font-size: 20px;
 }
-.container-fluid input:hover{
+.container-fluid textarea:hover{
     border-color: #006064;
     background-color: powderblue;
+    box-shadow: 0 0 10px #006064;
+    outline: none;
 }
 .container-fluid .btn{
     background-color: powderblue;
@@ -46,12 +48,12 @@
 }
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-    .container-fluid input{
+    .container-fluid textarea{
         height: 22em;
         width: 27em;
         font-size: 24px;
     }
-    .container-fluid input::placeholder{
+    .container-fluid textarea::placeholder{
         font-size: 24px;
     }
     .container-fluid .btn{
