@@ -22,6 +22,7 @@
 }
 .container-fluid input::placeholder{
     color:#006064;
+    text-align: center;
 }
 .container-fluid input:hover{
     border-color: #006064;
