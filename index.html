@@ -23,13 +23,24 @@
         </div>
         <div class="row d-flex justify-content-center">
             <div class="col-sm-12 col-md-4 p-1 d-flex justify-content-center">
-                <textarea id="input" placeholder="Введите слово на русском"></textarea>
+                <div class="position-relative tabs">
+                    <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+                    <label for="tab-btn-1">Напечатать</label>
+                    <input type="radio" name="tab-btn" id="tab-btn-2" value="">
+                    <label for="tab-btn-2">Нарисовать</label>
+                    <textarea id="text-input" placeholder="Введите слово на китайском"></textarea>
+                    <canvas id="image-input"></canvas>
+                </div>
             </div>
             <div class="col-sm-12 col-md-2 p-1 d-flex justify-content-center position-relative">
                 <button id="btnTranslate" type="button" class="position-absolute top-50 start-50 translate-middle btn btn-translate">Перевести на китайский</button>
             </div>
             <div class="col-sm-12 col-md-4 p-1 d-flex justify-content-center">
-                <textarea id="output" placeholder="Слово на китайском"></textarea>
+                <div class="position-relative tabs">
+                    <input type="radio" name="!tab-btn" id="useless-tab-btn" value="" checked>
+                    <label for="useless-tab-btn" style="visibility: hidden">hhh</label>
+                    <textarea id="output" placeholder="Перевод слова"></textarea>
+                </div>
             </div>
         </div>
     </div>
