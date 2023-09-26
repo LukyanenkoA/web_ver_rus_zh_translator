@@ -109,6 +109,24 @@
     background-color: #006064;
     color: #5DC8CD;
 }
+#drawkanji-clean-button,
+#drawkanji-back-line-button{
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    background-color: powderblue;
+    border: 1px solid #006064;
+    color: #006064;
+    font-size: 16px;
+    border-radius: 10px;
+}
+#canvas-buttons{
+    margin-top: 1em;
+}
+.container-fluid #drawkanji-clean-button:hover,
+.container-fluid #drawkanji-back-line-button:hover{
+    border-color: #5DC8CD;
+    background-color: #006064;
+    color: #5DC8CD;
+}
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .container-fluid textarea{
