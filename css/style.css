@@ -61,7 +61,7 @@
     border-color: #5DC8CD;
     color: #5DC8CD;
 }
-.tabs>#text-input, #image-input{
+.tabs>#text-input, #image-input, #canvas-buttons{
     /* скрыть контент по умолчанию */
     display: none;
 }
@@ -100,7 +100,8 @@
     border-bottom: 1px solid powderblue;
 }
 #tab-btn-1:checked~#text-input,
-#tab-btn-2:checked~#image-input {
+#tab-btn-2:checked~#image-input,
+#tab-btn-2:checked~#canvas-buttons {
   display: block;
 }
 .container-fluid .tabs>label:hover{
