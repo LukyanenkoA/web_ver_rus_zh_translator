@@ -25,7 +25,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     let rectLeft = canvas.getBoundingClientRect().left;
     let rectTop = canvas.getBoundingClientRect().top;
     const init = () => {
-        if(is_touch_device()){
+        if(canvas == document.activeElement || is_touch_device()){
             $('html, body').toggleClass('no-scroll');
         } else{
             $('html, body').removeClass('no-scroll');
