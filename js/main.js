@@ -25,7 +25,11 @@ window.addEventListener("DOMContentLoaded", function (event) {
     let rectLeft = canvas.getBoundingClientRect().left;
     let rectTop = canvas.getBoundingClientRect().top;
     const init = () => {
-        $('html, body').toggleClass('no-scroll');
+        if(is_touch_device()){
+            $('html, body').toggleClass('no-scroll');
+        } else{
+            $('html, body').removeClass('no-scroll');
+        }
         context.strokeStyle = "black";
         context.lineWidth = 1;
         //Set canvas height to parent div height
@@ -89,6 +93,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
         }
     }
     function redrawAll(){
+        console.log(points);
         if(points.length==0){return;}
 
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -112,8 +117,13 @@ window.addEventListener("DOMContentLoaded", function (event) {
     const undoLastStroke = (e) => {
         console.log(points.length);
         // remove the last drawn point from the drawing array
-        points.pop();
-        console.log(points.length);
+        let i = points.length-1;
+        console.log(points[i].mode)
+        do{
+            console.log(points[i].mode)
+            points.pop();
+            i--;
+        }while(points[i].mode!='begin')
         // redraw all the remaining points
         redrawAll();
     }
@@ -173,4 +183,8 @@ window.addEventListener("DOMContentLoaded", function (event) {
         points=[];
     });
     window.onload = init();
+});
+window.addEventListener('resize', function () { 
+    "use strict";
+    window.location.reload(); 
 });
