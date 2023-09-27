@@ -18,8 +18,6 @@ window.addEventListener("DOMContentLoaded", function (event) {
     let context = canvas.getContext("2d");
     let canvasOffset=$("#drawkanji-canvas").offset();
     console.log(canvasOffset)
-    let lastX;
-    let lastY;
     //Initially mouse X and Y positions are 0
     let mouseX = 0;
     let mouseY = 0;
@@ -29,6 +27,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     const init = () => {
         context.strokeStyle = "black";
         context.lineWidth = 1;
+        //Set canvas height to parent div height
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
         canvas.style.backgroundColor = "#ffffff";
@@ -45,39 +44,32 @@ window.addEventListener("DOMContentLoaded", function (event) {
     };
     //Exact x and y position of mouse/touch
     const getXY = (e) => {
-        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - rectLeft;
+        mouseX = (!is_touch_device() ? e.pageX  : e.touches?.[0].pageX ) - rectLeft;
         mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
     };
     const stopDrawing = (e) => {
-        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - rectLeft;
-        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
+        getXY(e);
         draw_bool = false;
         context.beginPath();
         points.push({x:mouseX,y:mouseY,mode:"end"});
     };
     //User has started drawing
     const startDrawing = (e) => {
-        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - rectLeft;
-        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
         draw_bool = true;
         getXY(e);
         // Put your mousedown stuff here
         context.beginPath();
         context.moveTo(mouseX,mouseY);
         points.push({x:mouseX,y:mouseY,mode:"begin"});
-        lastX=mouseX;
-        lastY=mouseY;
-      }
+        }
     //draw function
     const drawOnCanvas = (e) => {
         if (!is_touch_device()) {
             e.preventDefault();
           }
-        getXY(e);
-        // calc where the mouse is on the canvas
-        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - rectLeft;
-        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
         
+        // calc where the mouse is on the canvas
+        getXY(e);
         // if the mouse is being dragged (mouse button is down)
         // then keep drawing a polyline to this new mouse position
         if (draw_bool) {
@@ -85,12 +77,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
             // extend the polyline
             context.lineTo(mouseX, mouseY);
             context.stroke();
-    
-            // save this x/y because we might be drawing from here
-            // on the next mousemove
-            lastX = mouseX;
-            lastY = mouseY;
-    
+              
             // Command pattern stuff: Save the mouse position
             points.push({
                 x: mouseX,
@@ -129,43 +116,46 @@ window.addEventListener("DOMContentLoaded", function (event) {
         redrawAll();
     }
     // Get the position of a touch relative to the canvas
-    function getTouchPos(canvasDom, touchEvent) {
+    /*function getTouchPos(canvasDom, touchEvent) {
         let rectLeft = canvas.getBoundingClientRect().left;
         let rectTop = canvas.getBoundingClientRect().top;
         return {
-        x: touchEvent.touches[0].pageX - rectLeft,
+        x: touchEvent.touches[0].pageX  - rectLeft,
         y: touchEvent.touches[0].pageY - rectTop
         };
-    }
+    }*/
     //Mouse down/touch start inside canvas
     canvas.addEventListener("mousedown", startDrawing);
-    canvas.addEventListener("touchstart", function (e) {
+    /*canvas.addEventListener("touchstart", function (e) {
         mousePos = getTouchPos(canvas, e);
         let touch = e.touches[0];
         let mouseEvent = new MouseEvent("mousedown", {
-            pageX: touch.pageX,
+            pageX : touch.pageX ,
             pageY: touch.pageY
         });
         canvas.dispatchEvent(mouseEvent);
-        }, false);
+        }, false);*/ 
+    canvas.addEventListener("touchstart", startDrawing);
     //Start drawing when mouse/touch moves
     canvas.addEventListener("mousemove", drawOnCanvas);
-    canvas.addEventListener("touchmove", function (e) {
+    /*canvas.addEventListener("touchmove", function (e) {
         let touch = e.touches[0];
         let mouseEvent = new MouseEvent("mousemove", {
-          pageX: touch.pageX,
+          pageX : touch.pageX ,
           pageY: touch.pageY
         });
         canvas.dispatchEvent(mouseEvent);
-      }, false);
+      }, false);*/ 
+    canvas.addEventListener("touchmove", drawOnCanvas);
 
     //when mouse click stops/touch stops stop drawing and begin a new path
 
     canvas.addEventListener("mouseup", stopDrawing);
-    canvas.addEventListener("touchend", function (e) {
+    /*canvas.addEventListener("touchend", function (e) {
         let mouseEvent = new MouseEvent("mouseup", {});
         canvas.dispatchEvent(mouseEvent);
-      }, false);
+      }, false);*/ 
+    canvas.addEventListener("touchend", stopDrawing);
 
     //When mouse leaves the canvas
     canvas.addEventListener("mouseleave", stopDrawing);
