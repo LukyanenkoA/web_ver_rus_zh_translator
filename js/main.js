@@ -35,7 +35,6 @@ window.addEventListener("DOMContentLoaded", function (event) {
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
         canvas.style.backgroundColor = "#ffffff";
-        penButton.value = context.strokeStyle;
     };
     //Detect touch device
     const is_touch_device = () => {
@@ -70,7 +69,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
         points.push({x:mouseX,y:mouseY,mode:"begin"});
         lastX=mouseX;
         lastY=mouseY;
-        isMouseDown=true;
+        draw_bool=true;
       }
     //draw function
     const drawOnCanvas = (e) => {
@@ -78,7 +77,8 @@ window.addEventListener("DOMContentLoaded", function (event) {
         // calc where the mouse is on the canvas
         mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
         mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
-    
+        e.preventDefault();
+        e.stopPropagation();
         // if the mouse is being dragged (mouse button is down)
         // then keep drawing a polyline to this new mouse position
         if (draw_bool) {
@@ -92,8 +92,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
             lastX = mouseX;
             lastY = mouseY;
     
-            // Command pattern stuff: Save the mouse position and 
-            // the size/color of the brush to the "undo" array
+            // Command pattern stuff: Save the mouse position
             points.push({
                 x: mouseX,
                 y: mouseY,
@@ -105,23 +104,13 @@ window.addEventListener("DOMContentLoaded", function (event) {
 
         if(points.length==0){return;}
 
-        context.clearRect(0,0,canvas.width,canvas.height);
+        context.clearRect(0, 0, canvas.width, canvas.height);
 
         for(let i=0;i<points.length;i++){
 
           let pt=points[i];
 
-          let begin=false;
-
-          if(context.lineWidth!=pt.size){
-              context.lineWidth=pt.size;
-              begin=true;
-          }
-          if(context.strokeStyle!=pt.color){
-              context.strokeStyle=pt.color;
-              begin=true;
-          }
-          if(pt.mode=="begin" || begin){
+          if(pt.mode=="begin"){
               context.beginPath();
               context.moveTo(pt.x,pt.y);
           }
@@ -133,11 +122,11 @@ window.addEventListener("DOMContentLoaded", function (event) {
         context.stroke();
     }
 
-    const undoLastPoint = (e) => {
-
+    const undoLastStroke = (e) => {
+        console.log(points.length);
         // remove the last drawn point from the drawing array
-        let lastPoint=points.pop();
-    
+        points.pop();
+        console.log(points.length);
         // redraw all the remaining points
         redrawAll();
     }
@@ -145,7 +134,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     canvas.addEventListener("mousedown", startDrawing);
     canvas.addEventListener("touchstart", startDrawing);
 
-    //Start drawing when mouse.touch moves
+    //Start drawing when mouse/touch moves
     canvas.addEventListener("mousemove", drawOnCanvas);
     canvas.addEventListener("touchmove", drawOnCanvas);
 
@@ -159,7 +148,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     //Button for canceling mode
     cancelLastStrokeButton.addEventListener("click", () => {
         cancelLastStroke_bool = true;
-        undoLastPoint();
+        undoLastStroke();
     });
     //Clear
     clearButton.addEventListener("click", () => {
