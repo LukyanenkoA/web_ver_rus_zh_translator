@@ -128,18 +128,43 @@ window.addEventListener("DOMContentLoaded", function (event) {
         // redraw all the remaining points
         redrawAll();
     }
+    // Get the position of a touch relative to the canvas
+    function getTouchPos(canvasDom, touchEvent) {
+        var rect = canvasDom.getBoundingClientRect();
+        return {
+        x: touchEvent.touches[0].clientX - rect.left,
+        y: touchEvent.touches[0].clientY - rect.top
+        };
+    }
     //Mouse down/touch start inside canvas
     canvas.addEventListener("mousedown", startDrawing);
-    canvas.addEventListener("touchstart", startDrawing);
-
+    canvas.addEventListener("touchstart", function (e) {
+        mousePos = getTouchPos(canvas, e);
+        var touch = e.touches[0];
+        var mouseEvent = new MouseEvent("mousedown", {
+            clientX: touch.clientX,
+            clientY: touch.clientY
+        });
+        canvas.dispatchEvent(mouseEvent);
+        }, false);
     //Start drawing when mouse/touch moves
     canvas.addEventListener("mousemove", drawOnCanvas);
-    canvas.addEventListener("touchmove", drawOnCanvas);
+    canvas.addEventListener("touchmove", function (e) {
+        var touch = e.touches[0];
+        var mouseEvent = new MouseEvent("mousemove", {
+          clientX: touch.clientX,
+          clientY: touch.clientY
+        });
+        canvas.dispatchEvent(mouseEvent);
+      }, false);
 
     //when mouse click stops/touch stops stop drawing and begin a new path
 
     canvas.addEventListener("mouseup", stopDrawing);
-    canvas.addEventListener("touchend", stopDrawing);
+    canvas.addEventListener("touchend", function (e) {
+        var mouseEvent = new MouseEvent("mouseup", {});
+        canvas.dispatchEvent(mouseEvent);
+      }, false);
 
     //When mouse leaves the canvas
     canvas.addEventListener("mouseleave", stopDrawing);
@@ -152,6 +177,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     clearButton.addEventListener("click", () => {
         context.clearRect(0, 0, canvas.width, canvas.height);
         canvas.style.backgroundColor = "#fff";
+        points=[];
     });
     window.onload = init();
 });
