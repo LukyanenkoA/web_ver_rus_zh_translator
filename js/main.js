@@ -130,30 +130,31 @@ window.addEventListener("DOMContentLoaded", function (event) {
     }
     // Get the position of a touch relative to the canvas
     function getTouchPos(canvasDom, touchEvent) {
-        var rect = canvasDom.getBoundingClientRect();
+        let rectLeft = canvas.getBoundingClientRect().left;
+        let rectTop = canvas.getBoundingClientRect().top;
         return {
         x: touchEvent.touches[0].pageX - rectLeft,
-        y: touchEvent.touches[0].clientY - rectTop
+        y: touchEvent.touches[0].pageY - rectTop
         };
     }
     //Mouse down/touch start inside canvas
     canvas.addEventListener("mousedown", startDrawing);
     canvas.addEventListener("touchstart", function (e) {
         mousePos = getTouchPos(canvas, e);
-        var touch = e.touches[0];
-        var mouseEvent = new MouseEvent("mousedown", {
+        let touch = e.touches[0];
+        let mouseEvent = new MouseEvent("mousedown", {
             pageX: touch.pageX,
-            clientY: touch.clientY
+            pageY: touch.pageY
         });
         canvas.dispatchEvent(mouseEvent);
         }, false);
     //Start drawing when mouse/touch moves
     canvas.addEventListener("mousemove", drawOnCanvas);
     canvas.addEventListener("touchmove", function (e) {
-        var touch = e.touches[0];
-        var mouseEvent = new MouseEvent("mousemove", {
+        let touch = e.touches[0];
+        let mouseEvent = new MouseEvent("mousemove", {
           pageX: touch.pageX,
-          clientY: touch.clientY
+          pageY: touch.pageY
         });
         canvas.dispatchEvent(mouseEvent);
       }, false);
@@ -162,7 +163,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
 
     canvas.addEventListener("mouseup", stopDrawing);
     canvas.addEventListener("touchend", function (e) {
-        var mouseEvent = new MouseEvent("mouseup", {});
+        let mouseEvent = new MouseEvent("mouseup", {});
         canvas.dispatchEvent(mouseEvent);
       }, false);
 
