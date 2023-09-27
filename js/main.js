@@ -132,8 +132,8 @@ window.addEventListener("DOMContentLoaded", function (event) {
     function getTouchPos(canvasDom, touchEvent) {
         var rect = canvasDom.getBoundingClientRect();
         return {
-        x: touchEvent.touches[0].clientX - rect.left,
-        y: touchEvent.touches[0].clientY - rect.top
+        x: touchEvent.touches[0].pageX - rectLeft,
+        y: touchEvent.touches[0].clientY - rectTop
         };
     }
     //Mouse down/touch start inside canvas
@@ -142,7 +142,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
         mousePos = getTouchPos(canvas, e);
         var touch = e.touches[0];
         var mouseEvent = new MouseEvent("mousedown", {
-            clientX: touch.clientX,
+            pageX: touch.pageX,
             clientY: touch.clientY
         });
         canvas.dispatchEvent(mouseEvent);
@@ -152,7 +152,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     canvas.addEventListener("touchmove", function (e) {
         var touch = e.touches[0];
         var mouseEvent = new MouseEvent("mousemove", {
-          clientX: touch.clientX,
+          pageX: touch.pageX,
           clientY: touch.clientY
         });
         canvas.dispatchEvent(mouseEvent);
