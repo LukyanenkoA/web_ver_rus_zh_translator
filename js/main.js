@@ -24,14 +24,11 @@ window.addEventListener("DOMContentLoaded", function (event) {
     let mouseX = 0;
     let mouseY = 0;
     //get left and top of canvas
-    let offsetX = canvasOffset.left;
-    let offsetY = canvasOffset.top;
+    let rectLeft = canvas.getBoundingClientRect().left;
+    let rectTop = canvas.getBoundingClientRect().top;
     const init = () => {
         context.strokeStyle = "black";
         context.lineWidth = 1;
-        //Set canvas height to parent div height
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
         canvas.style.backgroundColor = "#ffffff";
@@ -48,21 +45,20 @@ window.addEventListener("DOMContentLoaded", function (event) {
     };
     //Exact x and y position of mouse/touch
     const getXY = (e) => {
-        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
-        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
+        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - rectLeft;
+        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
     };
     const stopDrawing = (e) => {
-        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
-        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
+        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - rectLeft;
+        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
         draw_bool = false;
+        context.beginPath();
         points.push({x:mouseX,y:mouseY,mode:"end"});
     };
     //User has started drawing
     const startDrawing = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
-        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
+        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - rectLeft;
+        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
         draw_bool = true;
         getXY(e);
         // Put your mousedown stuff here
@@ -71,15 +67,16 @@ window.addEventListener("DOMContentLoaded", function (event) {
         points.push({x:mouseX,y:mouseY,mode:"begin"});
         lastX=mouseX;
         lastY=mouseY;
-        draw_bool=true;
       }
     //draw function
     const drawOnCanvas = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+        if (!is_touch_device()) {
+            e.preventDefault();
+          }
+        getXY(e);
         // calc where the mouse is on the canvas
-        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
-        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
+        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - rectLeft;
+        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
         
         // if the mouse is being dragged (mouse button is down)
         // then keep drawing a polyline to this new mouse position
@@ -156,4 +153,5 @@ window.addEventListener("DOMContentLoaded", function (event) {
         context.clearRect(0, 0, canvas.width, canvas.height);
         canvas.style.backgroundColor = "#fff";
     });
+    window.onload = init();
 });
