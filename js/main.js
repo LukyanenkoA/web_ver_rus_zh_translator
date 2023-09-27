@@ -59,6 +59,8 @@ window.addEventListener("DOMContentLoaded", function (event) {
     };
     //User has started drawing
     const startDrawing = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
         mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
         draw_bool = true;
@@ -73,12 +75,12 @@ window.addEventListener("DOMContentLoaded", function (event) {
       }
     //draw function
     const drawOnCanvas = (e) => {
-
+        e.preventDefault();
+        e.stopPropagation();
         // calc where the mouse is on the canvas
         mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
         mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
-        e.preventDefault();
-        e.stopPropagation();
+        
         // if the mouse is being dragged (mouse button is down)
         // then keep drawing a polyline to this new mouse position
         if (draw_bool) {
@@ -101,7 +103,6 @@ window.addEventListener("DOMContentLoaded", function (event) {
         }
     }
     function redrawAll(){
-
         if(points.length==0){return;}
 
         context.clearRect(0, 0, canvas.width, canvas.height);
