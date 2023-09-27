@@ -25,6 +25,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     let rectLeft = canvas.getBoundingClientRect().left;
     let rectTop = canvas.getBoundingClientRect().top;
     const init = () => {
+        $('html, body').toggleClass('no-scroll');
         context.strokeStyle = "black";
         context.lineWidth = 1;
         //Set canvas height to parent div height
@@ -42,10 +43,11 @@ window.addEventListener("DOMContentLoaded", function (event) {
         return false;
         }
     };
+    
     //Exact x and y position of mouse/touch
     const getXY = (e) => {
-        mouseX = (!is_touch_device() ? e.pageX  : e.touches?.[0].pageX ) - rectLeft;
-        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
+        mouseX = (!is_touch_device() ? e.pageX  : e.changedTouches[0].pageX) - rectLeft;
+        mouseY = (!is_touch_device() ? e.pageY : e.changedTouches[0].pageY) - rectTop;
     };
     const stopDrawing = (e) => {
         getXY(e);

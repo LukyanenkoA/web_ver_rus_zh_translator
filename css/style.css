@@ -131,6 +131,9 @@
 #useless-tab-btn-label{
     display: none;
 }
+.no-scroll{
+    position: fixed;
+}
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .container-fluid textarea{
