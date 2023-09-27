@@ -135,7 +135,12 @@
     position: fixed;
 }
 /* Small devices (tablets, 768px and up) */
+
 @media (min-width: 768px) {
+    .container-fluid canvas,
+    .container-fluid textarea{
+        width: 12em;
+    }
     .container-fluid textarea{
         font-size: 24px;
     }
@@ -153,6 +158,10 @@
     }
 }
 /* Medium devices (desktops, 992px and up) */
-@media (min-width: 992px) {}
+@media (min-width: 992px) {
+    .container-fluid canvas,
+    .container-fluid textarea{
+        width: 17em;
+    }}
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {}
