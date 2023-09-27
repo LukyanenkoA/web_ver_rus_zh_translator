@@ -13,14 +13,19 @@ window.addEventListener("DOMContentLoaded", function (event) {
     let cancelLastStrokeButton = document.getElementById("drawkanji-back-line-button");
     let cancelLastStroke_bool = false;
     let draw_bool = false;
+    let points=[];
     //context for canvas
     let context = canvas.getContext("2d");
+    let canvasOffset=$("#drawkanji-canvas").offset();
+    console.log(canvasOffset)
+    let lastX;
+    let lastY;
     //Initially mouse X and Y positions are 0
     let mouseX = 0;
     let mouseY = 0;
     //get left and top of canvas
-    let rectLeft = canvas.getBoundingClientRect().left;
-    let rectTop = canvas.getBoundingClientRect().top;
+    let offsetX = canvasOffset.left;
+    let offsetY = canvasOffset.top;
     const init = () => {
         context.strokeStyle = "black";
         context.lineWidth = 1;
@@ -44,48 +49,94 @@ window.addEventListener("DOMContentLoaded", function (event) {
     };
     //Exact x and y position of mouse/touch
     const getXY = (e) => {
-        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - rectLeft;
-        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
+        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
+        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
     };
-    const stopDrawing = () => {
-        context.beginPath();
+    const stopDrawing = (e) => {
+        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
+        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
         draw_bool = false;
+        points.push({x:mouseX,y:mouseY,mode:"end"});
     };
     //User has started drawing
     const startDrawing = (e) => {
-        //drawing = true
+        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
+        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
         draw_bool = true;
         getXY(e);
-        //Start Drawing
+        // Put your mousedown stuff here
         context.beginPath();
-        context.moveTo(mouseX, mouseY);
-    };
+        context.moveTo(mouseX,mouseY);
+        points.push({x:mouseX,y:mouseY,mode:"begin"});
+        lastX=mouseX;
+        lastY=mouseY;
+        isMouseDown=true;
+      }
     //draw function
     const drawOnCanvas = (e) => {
-        if (!is_touch_device()) {
-        e.preventDefault();
-        }
-        getXY(e);
-        //if user is drawing
+
+        // calc where the mouse is on the canvas
+        mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - offsetX;
+        mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - offsetY;
+    
+        // if the mouse is being dragged (mouse button is down)
+        // then keep drawing a polyline to this new mouse position
         if (draw_bool) {
-        //create a line to x and y position of cursor
-        context.lineTo(mouseX, mouseY);
+    
+            // extend the polyline
+            context.lineTo(mouseX, mouseY);
+            context.stroke();
+    
+            // save this x/y because we might be drawing from here
+            // on the next mousemove
+            lastX = mouseX;
+            lastY = mouseY;
+    
+            // Command pattern stuff: Save the mouse position and 
+            // the size/color of the brush to the "undo" array
+            points.push({
+                x: mouseX,
+                y: mouseY,
+                mode: "draw"
+            });
+        }
+    }
+    function redrawAll(){
+
+        if(points.length==0){return;}
+
+        context.clearRect(0,0,canvas.width,canvas.height);
+
+        for(let i=0;i<points.length;i++){
+
+          let pt=points[i];
+
+          let begin=false;
+
+          if(context.lineWidth!=pt.size){
+              context.lineWidth=pt.size;
+              begin=true;
+          }
+          if(context.strokeStyle!=pt.color){
+              context.strokeStyle=pt.color;
+              begin=true;
+          }
+          if(pt.mode=="begin" || begin){
+              context.beginPath();
+              context.moveTo(pt.x,pt.y);
+          }
+          context.lineTo(pt.x,pt.y);
+          if(pt.mode=="end" || (i==points.length-1)){
+              context.stroke();
+          }
+        }
         context.stroke();
-        if (cancelLastStroke_bool) {
-            //destination-out draws new shapes behind the existing canvas content
-            context.globalCompositeOperation = "destination-out";
-        } else {
-            context.globalCompositeOperation = "source-over";
-        }
-        }
-    };
+    }
+
     const undoLastPoint = (e) => {
 
         // remove the last drawn point from the drawing array
-        var lastPoint=points.pop();
-    
-        // add the "undone" point to a separate redo array
-        redoStack.unshift(lastPoint);
+        let lastPoint=points.pop();
     
         // redraw all the remaining points
         redrawAll();
@@ -108,7 +159,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     //Button for canceling mode
     cancelLastStrokeButton.addEventListener("click", () => {
         cancelLastStroke_bool = true;
-        undoLastPoint
+        undoLastPoint();
     });
     //Clear
     clearButton.addEventListener("click", () => {
