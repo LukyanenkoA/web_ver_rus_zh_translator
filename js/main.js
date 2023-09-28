@@ -32,12 +32,12 @@ window.addEventListener("DOMContentLoaded", function (event) {
     let rectLeft = canvas.getBoundingClientRect().left;
     let rectTop = canvas.getBoundingClientRect().top;
     const init = () => {
-        console.log(canvas.activeElement);
+        /*console.log(canvas.activeElement);
         if(is_touch_device()){
             $('html, body').toggleClass('no-scroll');
         } else{
             $('html, body').removeClass('no-scroll');
-        }
+        }*/
         context.strokeStyle = "black";
         context.lineWidth = 1;
         //Set canvas height to parent div height
@@ -62,7 +62,9 @@ window.addEventListener("DOMContentLoaded", function (event) {
         mouseY = (!is_touch_device() ? e.pageY : e.changedTouches[0].pageY) - rectTop;
     };
     const stopDrawing = (e) => {
-        e.preventDefault();    
+        if (e.cancelable) {
+            e.preventDefault();
+        }   
         getXY(e);
         draw_bool = false;
         context.beginPath();
@@ -70,7 +72,9 @@ window.addEventListener("DOMContentLoaded", function (event) {
     };
     //User has started drawing
     const startDrawing = (e) => {
-        e.preventDefault();    
+        if (e.cancelable) {
+   e.preventDefault();
+}   
         draw_bool = true;
         getXY(e);
         // Put your mousedown stuff here
@@ -80,7 +84,9 @@ window.addEventListener("DOMContentLoaded", function (event) {
         }
     //draw function
     const drawOnCanvas = (e) => {
-        e.preventDefault();        
+        if (e.cancelable) {
+            e.preventDefault();
+        }       
         // calc where the mouse is on the canvas
         getXY(e);
         // if the mouse is being dragged (mouse button is down)
