@@ -137,7 +137,11 @@
     position: fixed;
 }
 
-
+@media (max-width: 768px) {
+    #useless-tab-btn-label{
+        display: none;
+    }
+}
 @media (min-width: 992px) {
     .container-fluid textarea{
         font-size: 24px;
