@@ -13,26 +13,5 @@ window.addEventListener("DOMContentLoaded", function (event) {
     console.log("DOM fully loaded and parsed");
     let b = document.getElementById('btnTranslate');
     b.addEventListener("click", translate);
-
-    //ocr js
-    let canvas = document.getElementById("drawkanji-canvas");
-    let context = canvas.getContext('2d', { willReadFrequently: true });
-    canvas.addEventListener("mouseup", function(e) {
-    draw_bool = false;
-    e.preventDefault();
-    var image = context.getImageData(0, 0, 1000, 1000);
-    runOCR(image);
-    });
-    function runOCR(image_data) {
-    let response = OCRAD(image_data);
-
-    if ('innerText' in document.getElementById("kanji_info")) {
-        document.getElementById("kanji_info").innerText = response;
-    } else {
-        document.getElementById("kanji_info").textContent = response;
-    }
-
-    }
-  
 });
 
