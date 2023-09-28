@@ -62,6 +62,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
         mouseY = (!is_touch_device() ? e.pageY : e.changedTouches[0].pageY) - rectTop;
     };
     const stopDrawing = (e) => {
+        e.preventDefault();    
         getXY(e);
         draw_bool = false;
         context.beginPath();
@@ -69,6 +70,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     };
     //User has started drawing
     const startDrawing = (e) => {
+        e.preventDefault();    
         draw_bool = true;
         getXY(e);
         // Put your mousedown stuff here
@@ -78,10 +80,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
         }
     //draw function
     const drawOnCanvas = (e) => {
-        if (!is_touch_device()) {
-            e.preventDefault();
-          }
-        
+        e.preventDefault();        
         // calc where the mouse is on the canvas
         getXY(e);
         // if the mouse is being dragged (mouse button is down)
