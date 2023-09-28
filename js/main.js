@@ -191,10 +191,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     });
     window.onload = init();
 });
-if(document.getElementById('tab-btn-2').checked){
-    window.addEventListener('resize', function () { 
-        "use strict";
-        window.location.reload(); 
-    });
-
-}
+window.addEventListener('resize', function () { 
+    "use strict";
+    window.location.reload(); 
+});
