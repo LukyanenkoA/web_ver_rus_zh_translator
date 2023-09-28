@@ -127,16 +127,18 @@
     background-color: #006064;
     color: #5DC8CD;
 }
-#useless-tab-btn,
-#useless-tab-btn-label{
+#useless-tab-btn{
     display: none;
+}
+#useless-tab-btn-label{
+    display: -webkit-box;
 }
 .no-scroll{
     position: fixed;
 }
-/* Small devices (tablets, 768px and up) */
 
-@media (min-width: 768px) {
+
+@media (min-width: 992px) {
     .container-fluid textarea{
         font-size: 24px;
     }
@@ -148,9 +150,6 @@
     }
     .container-fluid canvas{
         font-size: 24px;
-    }
-    #useless-tab-btn-label{
-        display: -webkit-box;
     }
 }
 /* Medium devices (desktops, 992px and up) */
