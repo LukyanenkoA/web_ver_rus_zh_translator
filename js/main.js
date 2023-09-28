@@ -191,7 +191,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     });
     window.onload = init();
 });
-window.addEventListener('resize', function () { 
+/*window.addEventListener('resize', function () { 
     "use strict";
     window.location.reload(); 
-});
+});*/
