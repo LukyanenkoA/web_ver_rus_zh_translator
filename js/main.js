@@ -192,17 +192,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
     });
     window.onload = init();
 });
-<<<<<<< HEAD
 window.addEventListener('resize', function () { 
     "use strict";
     window.location.reload(); 
 });
-=======
-if(document.getElementById('tab-btn-2').checked){
-    window.addEventListener('resize', function () { 
-        "use strict";
-        window.location.reload(); 
-    });
-
-}
->>>>>>> 5c13de7e65ceda009e02790cfa11b0a4c8551ebe
