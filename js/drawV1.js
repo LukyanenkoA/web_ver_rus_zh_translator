@@ -115,9 +115,9 @@ window.addEventListener("DOMContentLoaded", function (event) {
         // remove the last drawn point from the drawing array
         let i = points.length-1;
         do{
-            points.pop();
             i--;
         }while(points[i].mode!='begin')
+            points.pop();
         // redraw all the remaining points
         redrawAll();
     }

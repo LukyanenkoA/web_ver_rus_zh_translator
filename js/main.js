@@ -12,6 +12,39 @@ function translate(){
 window.addEventListener("DOMContentLoaded", function (event) {
     console.log("DOM fully loaded and parsed");
     let b = document.getElementById('btnTranslate');
-    b.addEventListener("click", translate);
+    //b.addEventListener("click", translate);
+
+
+    //working code if i need english monilingual dictionary
+    const url = "https://api.dictionaryapi.dev/api/v2/entries/zh/";
+    const result = document.getElementById("result");
+    b.addEventListener("click", () => {
+        let inpWord = document.getElementById("text-input").value;
+        fetch(`${url}${inpWord}`)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                result.innerHTML = `
+                    <div class="word">
+                        <h3>${inpWord}</h3>
+                    </div>
+                    <div class="details">
+                        <p>${data[0].meanings[0].partOfSpeech}</p>
+                        <p>/${data[0].phonetic}/</p>
+                    </div>
+                    <p class="word-meaning">
+                    ${data[0].meanings[0].definitions[0].definition}
+                    </p>
+                    <p class="word-example">
+                        ${data[0].meanings[0].definitions[0].example || ""}
+                    </p>`;
+            })
+            .catch(() => {
+                result.innerHTML = `<h3 class="error">Couldn't Find The Word</h3>`;
+            });
+    });
+    function playSound() {
+        sound.play();
+    }
 });
 
