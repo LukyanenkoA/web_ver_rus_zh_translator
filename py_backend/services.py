@@ -3,8 +3,6 @@ import sqlalchemy.orm as _orm
 import database as _database, model as _model, schemas as _schemas
 
 
-import parser as _parser
-
 def create_database():
     return _database.Base.metadata.create_all(bind=_database.engine)
 
@@ -15,7 +13,6 @@ def get_db():
         yield db
     finally:
         db.close()
-
 
 
 async def get_word_by_simplified(simplified: str, db: _orm.Session):
@@ -31,3 +28,8 @@ async def create_word(word: _schemas.WordCreate, db: _orm.Session):
     db.refresh(word_obj)
     return word_obj
 
+
+async def fill_in(list_of_dicts, db: _orm.Session):
+    for one_dict in list_of_dicts:
+        new_word = _model.Word(traditional=one_dict["traditional"], simplified=one_dict["simplified"],
+                               english=one_dict["english"], pinyin=one_dict["pinyin"], hsk=one_dict["hsk"])

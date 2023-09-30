@@ -1,19 +1,23 @@
-# A parser for the CC-Cedict. Convert the Chinese-English dictionary into a list of python dictionaries with "traditional","simplified", "pinyin", and "english" keys.
+# A parser for the CC-Cedict. Convert the Chinese-English dictionary into a list of python dictionaries with
+# "traditional","simplified", "pinyin", and "english" keys.
 
-# Make sure that the cedict_ts.u8 file is in the same folder as this file, and that the name matches the file name on line 13.
+# Make sure that the cedict_ts.u8 file is in the same folder as this file, and that the name matches the file name on
+# line 13.
 
-# Before starting, open the CEDICT text file and delete the copyright information at the top. Otherwise the program will try to parse it and you will get an error message.
+# Before starting, open the CEDICT text file and delete the copyright information at the top. Otherwise the program
+# will try to parse it and you will get an error message.
 
-# Characters that are commonly used as surnames have two entries in CC-CEDICT. This program will remove the surname entry if there is another entry for the character. If you want to include the surnames, simply delete lines 59 and 60.
+# Characters that are commonly used as surnames have two entries in CC-CEDICT. This program will remove the surname
+# entry if there is another entry for the character. If you want to include the surnames, simply delete lines 59 and 60.
 
 # This code was written by Franki Allegra in February 2020.
 
 # open CEDICT file
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 import shutil
 import sys
 
-with open('cedict_ts.u8', encoding='utf-8') as file:
+with open('cedict_t.u8', encoding='utf-8') as file:
     shutil.copyfileobj(file, sys.stdout)
     text = file.read()
     lines = text.split('\n')
@@ -65,7 +69,7 @@ with open('cedict_ts.u8', encoding='utf-8') as file:
 
         print("Removing Surnames . . .")
         remove_surnames()
-
+        print('Done!')
         return list_of_dicts
 
         # If you want to save to a database as JSON objects, create a class Word in the Models file of your Django project:
@@ -74,7 +78,7 @@ with open('cedict_ts.u8', encoding='utf-8') as file:
         # for one_dict in list_of_dicts:
         #     new_word = Word(traditional = one_dict["traditional"], simplified = one_dict["simplified"], english = one_dict["english"], pinyin = one_dict["pinyin"], hsk = one_dict["hsk"])
         #     new_word.save()
-        print('Done!')
+
 
 list_of_dicts = []
 parsed_dict = main()

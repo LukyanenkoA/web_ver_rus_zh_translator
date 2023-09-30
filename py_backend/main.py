@@ -2,7 +2,7 @@ import fastapi as _fastapi
 
 import sqlalchemy.orm as _orm
 
-import services as _services, schemas as _schemas, model as _model
+import services as _services, schemas as _schemas, model as _model, parser as _parser
 
 app = _fastapi.FastAPI()
 
@@ -16,6 +16,11 @@ async def create_word(
         raise _fastapi.HTTPException(status_code=400, detail="Word is already in use")
 
     return await _services.create_word(word, db)
+
+
+@app.post("/api/words")
+async def fill_in(db: _orm.Session = _fastapi.Depends(_services.get_db)):
+    return await _services.fill_in(_parser.main(), db)
 
 
 @app.get('/')
