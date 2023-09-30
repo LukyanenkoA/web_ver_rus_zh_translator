@@ -3,6 +3,8 @@ import sqlalchemy.orm as _orm
 import database as _database, model as _model, schemas as _schemas
 
 
+import parser as _parser
+
 def create_database():
     return _database.Base.metadata.create_all(bind=_database.engine)
 
@@ -13,6 +15,7 @@ def get_db():
         yield db
     finally:
         db.close()
+
 
 
 async def get_word_by_simplified(simplified: str, db: _orm.Session):
