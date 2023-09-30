@@ -16,7 +16,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
 
 
     //working code if i need english monilingual dictionary
-    const url = "https://api.dictionaryapi.dev/api/v2/entries/zh/";
+    const url = "https://api.dictionaryapi.dev/api/v2/entries/en/";
     const result = document.getElementById("result");
     b.addEventListener("click", () => {
         let inpWord = document.getElementById("text-input").value;
