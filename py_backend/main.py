@@ -1,10 +1,14 @@
 import fastapi as _fastapi
-
+from typing import List
 import sqlalchemy.orm as _orm
 
 import services as _services, schemas as _schemas, model as _model, parser as _parser
 
 app = _fastapi.FastAPI()
+
+list_of_dicts = _parser.parsed_dict
+for one_dict in list_of_dicts:
+    print(one_dict)
 
 
 @app.post("/api/words")
@@ -18,9 +22,17 @@ async def create_word(
     return await _services.create_word(word, db)
 
 
-@app.post("/api/words")
-async def fill_in(db: _orm.Session = _fastapi.Depends(_services.get_db)):
-    return await _services.fill_in(_parser.main(), db)
+@app.post('/api/words')
+async def create_word(words: List[_model.Word], db: _orm.Session = _fastapi.Depends(_services.get_db)):
+    if not words:
+        return _fastapi.responses.JSONResponse(status_code=404, content={"message": "Word details not found"})
+    else:
+        words_list = []
+        for word in words:
+            db_place = create_word(word, db)
+            words_json = word.dict()
+            words_list.append(words_json)
+    return _fastapi.responses.JSONResponse(content=words_list)
 
 
 @app.get('/')

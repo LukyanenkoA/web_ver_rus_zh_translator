@@ -9,7 +9,6 @@ window.addEventListener("DOMContentLoaded", function (event) {
     //context for canvas
     let context = canvas.getContext('2d', { willReadFrequently: true });
     let canvasOffset=$("#drawkanji-canvas").offset();
-    console.log(canvasOffset)
     //Initially mouse X and Y positions are 0
     let mouseX = 0;
     let mouseY = 0;

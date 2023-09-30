@@ -61,15 +61,15 @@ with open('cedict_t.u8', encoding='utf-8') as file:
     def main():
 
         # make each line into a dictionary
-        print("Parsing dictionary . . .")
+        # print("Parsing dictionary . . .")
         for line in dict_lines:
             parse_line(line)
 
         # remove entries for surnames from the data (optional):
 
-        print("Removing Surnames . . .")
+        # print("Removing Surnames . . .")
         remove_surnames()
-        print('Done!')
+        # print('Done!')
         return list_of_dicts
 
         # If you want to save to a database as JSON objects, create a class Word in the Models file of your Django project:
