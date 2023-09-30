@@ -16,7 +16,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
 
 
     //working code if i need english monilingual dictionary
-    const url = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+    const url = "http://127.0.0.1:8000/api/words/";
     const result = document.getElementById("result");
     b.addEventListener("click", () => {
         let inpWord = document.getElementById("text-input").value;
@@ -29,19 +29,20 @@ window.addEventListener("DOMContentLoaded", function (event) {
                         <h3>${inpWord}</h3>
                     </div>
                     <div class="details">
-                        <p>${data[0].meanings[0].partOfSpeech}</p>
-                        <p>/${data[0].phonetic}/</p>
+                        <p>традиционный иероглиф${data.traditional}</p>
+                        <p>упрощенный иероглиф${data.simplified}</p>
+                        <p>/${data.pinyin}/</p>
                     </div>
-                    <p class="word-meaning">
-                    ${data[0].meanings[0].definitions[0].definition}
+                    <p class="word-translation">
+                    ${data.english}
                     </p>
-                    <p class="word-example">
-                        ${data[0].meanings[0].definitions[0].example || ""}
+                    <p class="word-hsk">
+                        ${data.hsk}
                     </p>`;
             })
-            .catch(() => {
-                result.innerHTML = `<h3 class="error">Couldn't Find The Word</h3>`;
-            });
+            //.catch(() => {
+              //  result.innerHTML = `<h3 class="error">Couldn't Find The Word</h3>`;
+            //});
     });
 });
 

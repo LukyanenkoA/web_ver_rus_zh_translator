@@ -1,9 +1,22 @@
 import fastapi as _fastapi
 import sqlalchemy.orm as _orm
+from starlette.middleware.cors import CORSMiddleware
 
 import services as _services, schemas as _schemas, model as _model
 
 app = _fastapi.FastAPI()
+
+origins = [
+    "https://lukyanenkoa.github.io/web_ver_rus_zh_translator/"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/api/words")
