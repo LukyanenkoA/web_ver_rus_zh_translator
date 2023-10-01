@@ -70,12 +70,9 @@ window.addEventListener("DOMContentLoaded", function (event) {
         });
     }
     b.addEventListener("click", senddata());*/
-<<<<<<< HEAD
     //working code when the backend and frontend are running on the same computer
     /*const url = "http://localhost:8000/api/words/";
-=======
     const url = "http://localhost:8000/api/words/";
->>>>>>> f4f17a4e76c6af1017dfc7abbe2ee17b02d836ae
     const result = document.getElementById("result");
     b.addEventListener("click", () => {
         let inpWord = document.getElementById("text-input").value;
