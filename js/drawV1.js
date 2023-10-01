@@ -90,6 +90,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
         }
     }
     function redrawAll(){
+        context.strokeStyle = "#000000";
         if(points.length==0){return;}
 
         context.clearRect(0, 0, canvas.width, canvas.height);

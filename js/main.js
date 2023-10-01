@@ -43,6 +43,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
                 result.innerHTML = `<h3 class="error">Couldn't Find The Word</h3>`;
             });
     });*/
+    //NOT working code :(
     /*function senddata() {
         $.ajax({
             url: "http://127.0.0.1:8000/api/words",
@@ -69,7 +70,8 @@ window.addEventListener("DOMContentLoaded", function (event) {
         });
     }
     b.addEventListener("click", senddata());*/
-    const url = "http://127.0.0.1:8000/api/words/";
+    //working code when the backend and frontend are running on the same computer
+    /*const url = "http://localhost:8000/api/words/";
     const result = document.getElementById("result");
     b.addEventListener("click", () => {
         let inpWord = document.getElementById("text-input").value;
@@ -91,6 +93,21 @@ window.addEventListener("DOMContentLoaded", function (event) {
                     <h3 class="word-example"> уровень hsk:
                         ${data.hsk}
                     </h3>`;
+            })
+            .catch(() => {
+                result.innerHTML = `<h3 class="error">Couldn't Find The Word</h3>`;
+            });
+    });*/
+    const url = "http://localhost:8000/api/words/";
+    const result = document.getElementById("output");
+    b.addEventListener("click", () => {
+        let inpWord = document.getElementById("text-input").value;
+        fetch(`${url}${inpWord}`)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                result.value = 
+                `упрощенный иероглиф: ${inpWord}\nтрадиционный иероглиф: ${data.traditional}\nпиньинь: ${data.pinyin}\nперевод на английский: ${data.english}\nуровень hsk: ${data.hsk}`;
             })
             .catch(() => {
                 result.innerHTML = `<h3 class="error">Couldn't Find The Word</h3>`;
