@@ -111,7 +111,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
                 `упрощенный иероглиф: ${inpWord}\nтрадиционный иероглиф: ${data.traditional}\nпиньинь: ${data.pinyin}\nперевод на английский: ${data.english}\nуровень hsk: ${data.hsk}`;
             })
             .catch(() => {
-                result.innerHTML = `<h3 class="error">Couldn't Find The Word</h3>`;
+                result.value = `Такого слова нет`;
             });
     });
 });
