@@ -1,22 +1,10 @@
 import fastapi as _fastapi
 import sqlalchemy.orm as _orm
-from starlette.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 
 import services as _services, schemas as _schemas, model as _model
 
 app = _fastapi.FastAPI()
-
-origins = [
-    "https://lukyanenkoa.github.io/web_ver_rus_zh_translator/"
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
 @app.post("/api/words")
@@ -38,6 +26,22 @@ def hello_world():
 @app.get("/api/words")
 def get_words(db: _orm.Session = _fastapi.Depends(_services.get_db)):
     return db.query(_model.Word).all()
+
+
+origins = [
+    "https://lukyanenkoa.github.io/web_ver_rus_zh_translator/",
+    "http://localhost:8000l",
+    "http://127.0.0.1:8000/api/words/",
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/api/words/{word}", response_model=_schemas.Word)
