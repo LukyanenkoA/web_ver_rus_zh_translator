@@ -69,7 +69,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
         });
     }
     b.addEventListener("click", senddata());*/
-    const url = "http://127.0.0.1:8000/api/words/";
+    const url = "http://localhost:8000/api/words/";
     const result = document.getElementById("result");
     b.addEventListener("click", () => {
         let inpWord = document.getElementById("text-input").value;
