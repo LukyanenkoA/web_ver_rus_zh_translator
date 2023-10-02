@@ -1,4 +1,38 @@
+//code from hanzilookupdemo
+let _filesToLoad;
+$(document).ready(function () {
+    // Only fetch data (large, takes long) when the page has loaded
+    _filesToLoad = 1;
+    HanziLookup.init("mmah", "C:/c_work/HanziLookupJS/dist/mmah.json");
+});
+//end of code from hanzilookupdemo
+
 window.addEventListener("DOMContentLoaded", function (event) {
+
+
+    //code from hanzilookupdemo
+    // Fetches hand-drawn input from drawing board and looks up Hanzi
+    function lookup() {
+        // Decompose character from drawing board
+        let analyzedChar = new HanziLookup.AnalyzedCharacter(canvas.cloneStrokes());
+        // Look up with original HanziLookup data
+        // Look up with MMAH data
+        let matcherMMAH = new HanziLookup.Matcher("mmah");
+            matcherMMAH.match(analyzedChar, 8, function(matches) {
+                showResults($("kanji_info2"), matches);
+        });
+    }
+
+    // Populates UI with (ordered) Hanzi matches
+    function showResults(elmHost, matches) {
+        elmHost.html("");
+        for (let i = 0; i != matches.length; ++i) {
+            elmHost.append("<span>" + matches[i].character + "</span>");
+        }
+    }
+    //end of code from hanzilookupdemo
+
+
     //Initial references
     let canvas = document.getElementById("drawkanji-canvas");
     let clearButton = document.getElementById("drawkanji-clean-button");
@@ -169,12 +203,14 @@ window.addEventListener("DOMContentLoaded", function (event) {
     cancelLastStrokeButton.addEventListener("click", () => {
         cancelLastStroke_bool = true;
         undoLastStroke();
+        lookup();
     });
     //Clear
     clearButton.addEventListener("click", () => {
         context.clearRect(0, 0, canvas.width, canvas.height);
         canvas.style.backgroundColor = "#fff";
         points=[];
+        lookup();
     });
     window.onload = init();
 });
