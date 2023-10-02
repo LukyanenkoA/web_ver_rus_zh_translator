@@ -3,7 +3,7 @@ let _filesToLoad;
 $(document).ready(function () {
     // Only fetch data (large, takes long) when the page has loaded
     _filesToLoad = 1;
-    HanziLookup.init("mmah", "C:/c_work/HanziLookupJS/dist/mmah.json");
+   // HanziLookup.init("mmah", "C:/c_work/HanziLookupJS/dist/mmah.json");
 });
 //end of code from hanzilookupdemo
 

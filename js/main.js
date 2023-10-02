@@ -99,7 +99,7 @@ window.addEventListener("DOMContentLoaded", function (event) {
                 result.innerHTML = `<h3 class="error">Couldn't Find The Word</h3>`;
             });
     });*/
-    const url = "http://localhost:8000/api/words/";
+    const url = "http://45.153.70.53:8000/api/words/";
     const result = document.getElementById("output");
     b.addEventListener("click", () => {
         let inpWord = document.getElementById("text-input").value;
